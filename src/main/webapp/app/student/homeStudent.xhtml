@@ -49,7 +49,7 @@
 			</h:panelGrid>
 
 			<h:panelGrid border="0" columns="3">
-				<p:commandButton value="#{msg['save']}" action="#{studentController.addStudent()}" />
+				<p:commandButton value="#{msg['save']}" action="#{studentController.addStudent()}" ajax="false"/>
 				<p:commandButton value="#{msg['reset']}" action="#{studentController.reset()}" immediate="true" />
 				<p:commandButton value="#{msg['home']}" action="#{studentController.backHome()}" immediate="true" />
 			</h:panelGrid>
@@ -118,7 +118,9 @@
 						</f:facet>
 						<p:commandLink value="#{msg['action.view']}" action="#{studentController.viewStudent(item)}" /> |
 							<p:commandLink value="#{msg['action.edit']}" action="#{studentController.updateSelectedStudent(item)}" /> |
-							<p:commandLink value="#{msg['action.delete']}" action="#{studentController.deleteStudent(item)}" />
+							<p:commandLink value="#{msg['action.delete']}" action="#{studentController.deleteStudent(item)}" ajax="false">
+							<p:confirm header="Confirmation" message="Do you want to delete this record?" icon="pi pi-info-circle"/>
+							</p:commandLink>
 					</p:column>
 				</p:dataTable>
 			</h:form>

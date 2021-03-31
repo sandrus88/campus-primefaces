@@ -24,7 +24,7 @@
 			</h:panelGrid>
 
 			<h:panelGrid border="0" columns="3">
-				<p:commandButton value="#{msg['save']}" action="#{topicController.addTopic()}" />
+				<p:commandButton value="#{msg['save']}" action="#{topicController.addTopic()}" ajax="false"/>
 				<p:commandButton value="#{msg['reset']}" action="#{topicController.reset()}" immediate="true" />
 				<p:commandButton value="#{msg['home']}" action="#{topicController.backHome()}" immediate="true" />
 			</h:panelGrid>
@@ -63,7 +63,7 @@
 						</f:facet>
 						<p:commandLink value="#{msg['action.view']}" action="#{topicController.viewTopic(item)}" /> |
                         <p:commandLink value="#{msg['action.edit']}" action="#{topicController.updateSelectedTopic(item)}" /> |
-                        <p:commandLink value="#{msg['action.delete']}" action="#{topicController.deleteTopic(item)}" />
+                        <p:commandLink value="#{msg['action.delete']}" action="#{topicController.deleteTopic(item)}" ajax="false"/>
 					</p:column>
 				</p:dataTable>
 			</h:form>
