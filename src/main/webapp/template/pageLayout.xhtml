@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<f:view locale="#{localeBean.locale}">
+    <h:head>
+        <h:outputStylesheet library="css" name="style.css"/>
+
+        <title>
+            <ui:insert name="title">
+                <h:outputText value="#{msg['home.manage.homePageTitle']}"/>
+            </ui:insert>
+        </title>
+    </h:head>
+
+    <h:body>
+        <div class="containerBox">
+            <div class="contentBox">
+                <div id="header">
+                    <div id="headerDiv">
+                        <h3>
+                            <h:outputText value="#{msg['home.manage.title']}"/>
+                        </h3>
+
+                        <h:form>
+                        <h:panelGrid columns="2" border="0">
+                        	<h:outputLabel value="#{msg['home.manage.selectLanguage']}"/>
+                            <p:selectOneMenu value="#{localeBean.language}" onchange="submit()">
+                                <f:selectItem itemValue="en" itemLabel="#{msg['home.manage.selectedLanguage.en']}"/>
+                                <f:selectItem itemValue="it" itemLabel="#{msg['home.manage.selectedLanguage.it']}"/>
+                            </p:selectOneMenu>
+                        </h:panelGrid> 
+                            <br></br>
+                            <br></br>
+                        </h:form>
+                    </div>
+                </div>
+
+                <div id="content">
+                    <table width="100%">
+                        <tr class="left_content">
+                            <td valign="top" width="180px">
+                                <h:form>
+                                    <p:commandLink value="#{msg['home.manage.student']}" action="/app/student/homeStudent.xhtml"/> <br/>
+                                    <p:commandLink value="#{msg['home.manage.course']}" action="/app/course/homeCourse.xhtml"/> <br/>
+                                    <p:commandLink value="#{msg['home.manage.topic']}" action="/app/topic/homeTopic.xhtml"/> <br/>
+                                </h:form>
+                            </td>
+                            <td valign="top" align="center">
+                                <ui:insert name="content"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div id="footer">
+                    <div id="footerDiv" align="center">
+                        Copyright © 2021 All rights reserved 2021
+                    </div>
+                </div>
+            </div>
+        </div>
+    </h:body>
+</f:view>
+</html>

@@ -1,0 +1,92 @@
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/template/pageLayout.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{msg['course.home.title']}" />
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="newCourseForm">
+			<h3>
+				<h:outputText value="#{msg['course.home.title']}" />
+			</h3>
+			<h:panelGrid border="0" columns="3">
+				<h:outputLabel for="name" value="#{msg['course.name']}*" />
+				<p:inputText id="name" value="#{courseController.newName}" required="true" label="#{msg['course.name']}" />
+				<p:message for="name" style="color:red" />
+
+				<h:outputLabel for="description" value="#{msg['course.description']}" />
+				<p:inputText id="description" value="#{courseController.newDescription}" />
+				<h:outputText />
+
+				<h:outputLabel for="enabled" value="#{msg['course.enabled']}" />
+				<p:selectBooleanCheckbox id="enabled" value="#{courseController.newEnabled}" />
+				<h:outputText />
+			</h:panelGrid>
+
+			<h:panelGrid border="0" columns="3">
+				<p:commandButton value="#{msg['save']}" action="#{courseController.addCourse()}" />
+				<p:commandButton value="#{msg['reset']}" action="#{courseController.reset()}" immediate="true" />
+				<p:commandButton value="#{msg['home']}" action="#{courseController.backHome()}" immediate="true" />
+			</h:panelGrid>
+		</h:form>
+
+
+		<div>
+			<h1>
+				<h:outputText value="#{msg['course.home.table']}" />
+			</h1>
+
+			<h:form id="courseListForm">
+				<p:dataTable value="#{courseController.courseList}" var="item" border="2" id="coursesTable">
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msg['course.id']}" />
+						</f:facet>
+						<h:outputText value="#{item.id}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msg['course.name']}" />
+						</f:facet>
+						<h:outputText value="#{item.name}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msg['course.description']}" />
+						</f:facet>
+						<h:outputText value="#{item.description}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msg['course.enabled']}" />
+						</f:facet>
+						<h:outputText value="#{item.enabled}" converter="booleanToYesNoConverter" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msg['action.title']}" />
+						</f:facet>
+						<p:commandLink value="#{msg['action.view']}" action="#{courseController.viewCourse(item)}" /> | 
+							<p:commandLink value="#{msg['action.edit']}" action="#{courseController.updateSelectedCourse(item)}" /> | 
+							<p:commandLink value="#{msg['action.delete']}" action="#{courseController.deleteCourse(item)}" /> | 
+							<p:commandLink value="#{msg['course.topics']}" action="#{courseController.viewTopics(item)}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>
+
+
+
+
+

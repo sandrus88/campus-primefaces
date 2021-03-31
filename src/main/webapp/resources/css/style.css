@@ -1,0 +1,43 @@
+@charset "ISO-8859-1";
+
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #EEEEEE;
+	font-family: "Tahoma", sans-serif;
+	font-size: small;
+	color: black;
+}
+
+h1 {
+  color:#243446;
+  text-align: center;
+}
+h2 {
+  color:#243446;
+  text-align: center;
+}
+h3 {
+  color:#243446;
+  text-align: center;
+}
+
+#header{
+  background-color: #FFDFDF;
+}
+
+#footer{
+    background-color: #FFDFDF;
+}
+
+
+.containerBox {
+    overflow: auto;
+    background: #EEEEEE;
+}
+
+.contentBox {
+    margin: 0.5cm 0.5cm 0.5cm 0.8%;
+    width: 21cm;
+    box-shadow: 0 0 11px rgb(0 0 0 / 50%);
+}

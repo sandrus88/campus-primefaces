@@ -1,0 +1,43 @@
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/template/pageLayout.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{msg['student.view.title']}" /> #{studentController.selectedStudent.name} #{studentController.selectedStudent.surname}
+		</ui:define>
+	<ui:define name="content">
+		<h3>
+			<h:outputText value="#{msg['student.view.title']}" /> #{studentController.selectedStudent.name} #{studentController.selectedStudent.surname}
+		</h3>
+		<h:form id="detailStudentForm">
+			<h:panelGrid columns="2" border="0">
+				<h:outputLabel value="#{msg['student.id']}" />
+				<h:outputText value="#{studentController.selectedStudent.id}" />
+
+				<h:outputLabel value="#{msg['student.name']}" />
+				<h:outputText value="#{studentController.selectedStudent.name}" />
+
+				<h:outputLabel value="#{msg['student.surname']}" />
+				<h:outputText value="#{studentController.selectedStudent.surname}" />
+
+				<h:outputLabel value="#{msg['student.email']}" />
+				<h:outputText value="#{studentController.selectedStudent.email}" />
+
+				<h:outputLabel value="#{msg['student.jobTitle']}" />
+				<h:outputText value="#{studentController.selectedStudent.jobTitle}" />
+
+				<h:outputLabel value="#{msg['student.paymentType']}" />
+				<h:outputText value="#{studentController.showPaymentType(studentController.selectedStudent.paymentType)}" />
+
+				<h:outputLabel value="#{msg['student.sex']}" />
+				<h:outputText value="#{studentController.selectedStudent.sex}" />
+
+				<p:commandButton value="#{msg['back']}" action="#{studentController.reset()}" />
+				<p:commandButton value="#{msg['home']}" action="../../index.xhtml" />
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,78 @@
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/template/pageLayout.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{msg['topic.home.title']}" />
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="newTopicForm">
+			<h3>
+				<h:outputText value="#{msg['topic.home.title']}" />
+			</h3>
+			<h:panelGrid border="0" columns="3">
+				<h:outputLabel for="name" value="#{msg['topic.name']}*" />
+				<p:inputText id="name" value="#{topicController.newName}" required="true" label="#{msg['topic.name']}" />
+				<p:message for="name" style="color:red" />
+
+				<h:outputLabel for="description" value="#{msg['topic.description']}" />
+				<p:inputText id="description" value="#{topicController.newDescription}" />
+				<h:outputText />
+			</h:panelGrid>
+
+			<h:panelGrid border="0" columns="3">
+				<p:commandButton value="#{msg['save']}" action="#{topicController.addTopic()}" />
+				<p:commandButton value="#{msg['reset']}" action="#{topicController.reset()}" immediate="true" />
+				<p:commandButton value="#{msg['home']}" action="#{topicController.backHome()}" immediate="true" />
+			</h:panelGrid>
+		</h:form>
+		<div>
+			<h1>
+				<h:outputText value="#{msg['topic.home.table']}" />
+			</h1>
+
+			<h:form id="topicsListForm">
+				<p:dataTable value="#{topicController.topicList}" var="item" border="2" id="topicsTable">
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msg['topic.id']}" />
+						</f:facet>
+						<h:outputText value="#{item.id}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msg['topic.name']}" />
+						</f:facet>
+						<h:outputText value="#{item.name}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msg['topic.description']}" />
+						</f:facet>
+						<h:outputText value="#{item.description}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msg['action.title']}" />
+						</f:facet>
+						<p:commandLink value="#{msg['action.view']}" action="#{topicController.viewTopic(item)}" /> |
+                        <p:commandLink value="#{msg['action.edit']}" action="#{topicController.updateSelectedTopic(item)}" /> |
+                        <p:commandLink value="#{msg['action.delete']}" action="#{topicController.deleteTopic(item)}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>
+
+
+
+
+

@@ -1,0 +1,35 @@
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/template/pageLayout.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{msg['topic.edit.title']}" /> #{topicController.selectedTopic.name}
+        </ui:define>
+	<ui:define name="content">
+		<h:form id="topicForm">
+			<h3>
+				<h:outputText value="#{msg['topic.edit.title']}" /> #{topicController.selectedTopic.name}
+			</h3>
+			<h:panelGrid columns="3" border="0">
+				<h:outputLabel for="id" value="#{msg['topic.id']}" />
+				<p:inputText id="id" value="#{topicController.selectedTopic.id}" disabled="true" />
+				<h:outputText />
+
+				<h:outputLabel for="name" value="#{msg['topic.name']}*" />
+				<p:inputText id="name" value="#{topicController.selectedTopic.name}" required="true" label="#{msg['topic.name']}" />
+				<p:message for="name" style="color:red" />
+
+				<h:outputLabel for="description" value="#{msg['topic.description']}" />
+				<p:inputText id="description" value="#{topicController.selectedTopic.description}" />
+				<h:outputText />
+
+				<p:commandButton value="#{msg['save']}" action="#{topicController.updateTopic}" />
+				<p:commandButton value="#{msg['back']}" action="homeTopic.xhtml" immediate="true" />
+				<h:outputText />
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

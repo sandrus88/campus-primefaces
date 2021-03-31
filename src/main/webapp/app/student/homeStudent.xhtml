@@ -1,0 +1,133 @@
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/template/pageLayout.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{msg['student.home.title']}" />
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="newStudentForm">
+			<h3>
+				<h:outputText value="#{msg['student.home.title']}" />
+			</h3>
+			<h:panelGrid border="0" columns="3">
+
+				<h:outputLabel for="name" value="#{msg['student.name']}*" />
+				<p:inputText id="name" value="#{studentController.newName}" required="true" label="#{msg['student.name']}" />
+				<p:message for="name" style="color:red" />
+
+				<h:outputLabel for="surname" value="#{msg['student.surname']}*" />
+				<p:inputText id="surname" value="#{studentController.newSurname}" required="true" label="#{msg['student.surname']}" />
+				<p:message for="surname" style="color:red" />
+
+				<h:outputLabel for="email" value="#{msg['student.email']}" />
+				<p:inputText id="email" value="#{studentController.newEmail}">
+					<f:validator validatorId="emailValidator" />
+				</p:inputText>
+				<p:message for="email" style="color:red" />
+
+				<h:outputLabel for="jobTitle" value="#{msg['student.jobTitle']}" />
+				<p:inputText id="jobTitle" value="#{studentController.newJobTitle}" />
+				<h:outputText />
+
+				<h:outputLabel for="paymentType" value="#{msg['student.paymentType']}" />
+				<p:selectOneMenu id="paymentType" value="#{studentController.newPaymentType}">
+					<f:selectItem itemLabel="" />
+					<f:selectItems value="#{studentController.getEnumValues()}" var="payment" itemValue="#{payment}" itemLabel="#{studentController.showPaymentType(payment)}" />
+				</p:selectOneMenu>
+				<h:outputText />
+
+				<h:outputLabel for="sex" value="#{msg['student.sex']}*" />
+				<p:selectOneRadio id="sex" value="#{studentController.newSex}" required="true" label="#{msg['student.sex']}">
+					<f:selectItem itemValue="#{msg['student.male']}" itemLabel="M" />
+					<f:selectItem itemValue="#{msg['student.female']}" itemLabel="F" />
+				</p:selectOneRadio>
+				<p:message for="sex" style="color:red" />
+			</h:panelGrid>
+
+			<h:panelGrid border="0" columns="3">
+				<p:commandButton value="#{msg['save']}" action="#{studentController.addStudent()}" />
+				<p:commandButton value="#{msg['reset']}" action="#{studentController.reset()}" immediate="true" />
+				<p:commandButton value="#{msg['home']}" action="#{studentController.backHome()}" immediate="true" />
+			</h:panelGrid>
+		</h:form>
+
+		<div>
+			<h1>
+				<h:outputText value="#{msg['student.home.table']}" />
+			</h1>
+
+			<h:form id="studentListForm">
+				<p:dataTable value="#{studentController.studentList}" var="item" border="2" id="studentsTable">
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msg['student.id']}" />
+						</f:facet>
+						<h:outputText value="#{item.id}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msg['student.name']}" />
+						</f:facet>
+						<h:outputText value="#{item.name}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msg['student.surname']}" />
+						</f:facet>
+						<h:outputText value="#{item.surname}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msg['student.email']}" />
+						</f:facet>
+						<h:outputText value="#{item.email}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msg['student.jobTitle']}" />
+						</f:facet>
+						<h:outputText value="#{item.jobTitle}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msg['student.paymentType']}" />
+						</f:facet>
+						<h:outputText value="#{studentController.showPaymentType(item.paymentType)}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msg['student.sex']}" />
+						</f:facet>
+						<h:outputText value="#{item.sex}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msg['action.title']}" />
+						</f:facet>
+						<p:commandLink value="#{msg['action.view']}" action="#{studentController.viewStudent(item)}" /> |
+							<p:commandLink value="#{msg['action.edit']}" action="#{studentController.updateSelectedStudent(item)}" /> |
+							<p:commandLink value="#{msg['action.delete']}" action="#{studentController.deleteStudent(item)}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>
+
+
+
+
+
