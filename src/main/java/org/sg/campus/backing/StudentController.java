@@ -154,6 +154,14 @@ public class StudentController {
 		return studentList;
 	}
 
+	public void setStudentList(List<Student> studentList) {
+		this.studentList = studentList;
+	}
+
+	public void setSelectedStudent(Student selectedStudent) {
+		this.selectedStudent = selectedStudent;
+	}
+
 	public Student getSelectedStudent() {
 		return selectedStudent;
 	}

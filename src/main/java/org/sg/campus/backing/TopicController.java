@@ -85,6 +85,14 @@ public class TopicController {
 	public Topic getSelectedTopic() {
 		return selectedTopic;
 	}
+	
+	public void setTopicList(List<Topic> topicList) {
+		this.topicList = topicList;
+	}
+
+	public void setSelectedTopic(Topic selectedTopic) {
+		this.selectedTopic = selectedTopic;
+	}
 
 	private void cleanForm() {
 		setNewName(null);

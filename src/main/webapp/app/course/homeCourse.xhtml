@@ -74,12 +74,26 @@
 						<f:facet name="header">
 							<h:outputText value="#{msg['action.title']}" />
 						</f:facet>
-						<p:commandLink value="#{msg['action.view']}" action="#{courseController.viewCourse(item)}" /> | 
-							<p:commandLink value="#{msg['action.edit']}" action="#{courseController.updateSelectedCourse(item)}" /> | 
-							<p:commandLink value="#{msg['action.delete']}" action="#{courseController.deleteCourse(item)}" ajax="false" /> | 
-							<p:commandLink value="#{msg['course.topics']}" action="#{courseController.viewTopics(item)}" />
+						<p:commandLink value="#{msg['action.view']}" action="#{courseController.viewCourse(item)}">
+							<i class="fa fa-fw fa-search"/>
+						</p:commandLink> | 
+						<p:commandLink value="#{msg['action.edit']}" action="#{courseController.updateSelectedCourse(item)}"> 
+							<i class="fa fa-fw fa-pencil"/>
+						</p:commandLink> | 
+						<p:commandLink oncomplete="PF('dialog').show()">
+							<i class="fa fa-fw fa-remove"/>
+							<f:setPropertyActionListener value="#{item}" target="#{courseController.selectedCourse}" />
+						</p:commandLink> | 
+						<p:commandLink value="#{msg['course.topics']}" action="#{courseController.viewTopics(item)}">
+							<i class="fa-list-alt"/>
+						</p:commandLink>
 					</p:column>
 				</p:dataTable>
+				<p:dialog widgetVar="dialog" showEffect="fade" hideEffect="fade" modal="true" width="350" resizable="false">
+					<h:outputText value="#{msg['popup.message.delete']}"/><br/>
+					<p:commandButton value="#{msg['popup.delete.yes']}" actionListener="#{courseController.deleteCourse(courseController.selectedCourse)}" styleClass="ui-confirmdialog-yes" update="@form" oncomplete="PF('dialog').hide()"/>
+            		<p:commandButton value="#{msg['popup.delete.no']}" styleClass="ui-confirmdialog-no ui-button-flat" onclick="PF('dialog').hide()"/>
+				</p:dialog>
 			</h:form>
 		</div>
 	</ui:define>

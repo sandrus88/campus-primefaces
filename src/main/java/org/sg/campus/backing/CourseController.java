@@ -138,6 +138,26 @@ public class CourseController {
 	public Course getSelectedCourse() {
 		return selectedCourse;
 	}
+	
+	public TopicController getTopicController() {
+		return topicController;
+	}
+
+	public void setTopicController(TopicController topicController) {
+		this.topicController = topicController;
+	}
+
+	public void setCourseList(List<Course> courseList) {
+		this.courseList = courseList;
+	}
+
+	public void setSelectedCourse(Course selectedCourse) {
+		this.selectedCourse = selectedCourse;
+	}
+
+	public void setAllTopics(List<Topic> allTopics) {
+		this.allTopics = allTopics;
+	}
 
 	public List<Topic> getAllTopics() {
 		topicController = JsfUtil.findBean("topicController");
