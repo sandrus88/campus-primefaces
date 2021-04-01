@@ -21,10 +21,8 @@
 
 				<h:outputLabel value="#{msg['topic.description']}" />
 				<h:outputText id="description" value="#{topicController.selectedTopic.description}" />
-
-				<p:commandButton value="#{msg['back']}" action="homeTopic.xhtml" />
-				<p:commandButton value="#{msg['home']}" action="../../index.xhtml" />
 			</h:panelGrid>
+				<p:commandButton value="#{msg['back']}" action="homeTopic.xhtml" />
 		</h:form>
 	</ui:define>
 </ui:composition>

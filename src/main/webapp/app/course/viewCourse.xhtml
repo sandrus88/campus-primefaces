@@ -24,10 +24,8 @@
 
 				<h:outputLabel value="#{msg['course.enabled']}" />
 				<p:selectBooleanCheckbox value="#{courseController.selectedCourse.enabled}" disabled="true" />
-
-				<p:commandButton value="#{msg['back']}" action="homeCourse.xhtml" />
-				<p:commandButton value="#{msg['home']}" action="../../index.xhtml" />
 			</h:panelGrid>
+				<p:commandButton value="#{msg['back']}" action="homeCourse.xhtml" />
 		</h:form>
 	</ui:define>
 </ui:composition>

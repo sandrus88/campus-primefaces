@@ -28,7 +28,7 @@ public class CourseController {
 	private String newDescription;
 	private boolean newEnabled;
 
-	public void updateCourseTopics() {
+	public void updateCourseTopics(Course course) {
 		List<Topic> checkedTopics = new ArrayList<Topic>();
 		for (int i = 0; i < allTopics.size(); i++) {
 			final Topic topic = allTopics.get(i);
@@ -37,7 +37,21 @@ public class CourseController {
 			}
 		}
 		selectedCourse.setTopicList(checkedTopics);
+		cleanAllTopics();
 		System.out.println("Topics selected for course id" + selectedCourse.getId() + ": " + checkedTopics);
+	}
+	
+	public void viewTopics(Course course) {
+		selectedCourse = course;
+		List<Topic> checkedTopics = selectedCourse.getTopicList();
+		for (int i = 0; i < allTopics.size(); i++) {
+			final Topic topic = allTopics.get(i);
+			if (checkedTopics.contains(topic)) {
+				topic.setChecked(true);
+			}
+		}
+		System.out.println(selectedCourse);
+//		return "/app/course/courseTopicsList.xhtml?faces-redirect=true";
 	}
 
 	public void cleanAllTopics() {
@@ -84,19 +98,6 @@ public class CourseController {
 		selectedCourse = course;
 		System.out.println("Course " + selectedCourse + " showed correctly");
 		return "/app/course/viewCourse.xhtml?faces-redirect=true";
-	}
-
-	public String viewTopics(Course course) {
-		selectedCourse = course;
-		List<Topic> checkedTopics = selectedCourse.getTopicList();
-		for (int i = 0; i < allTopics.size(); i++) {
-			final Topic topic = allTopics.get(i);
-			if (checkedTopics.contains(topic)) {
-				topic.setChecked(true);
-			}
-		}
-		System.out.println(selectedCourse);
-		return "/app/course/courseTopicsList.xhtml?faces-redirect=true";
 	}
 
 	public String getNewName() {

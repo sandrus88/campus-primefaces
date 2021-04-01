@@ -23,10 +23,9 @@
 				<h:outputText />
 			</h:panelGrid>
 
-			<h:panelGrid border="0" columns="3">
+			<h:panelGrid border="0" columns="2">
 				<p:commandButton value="#{msg['save']}" action="#{topicController.addTopic()}" ajax="false"/>
 				<p:commandButton value="#{msg['reset']}" action="#{topicController.reset()}" immediate="true" />
-				<p:commandButton value="#{msg['home']}" action="#{topicController.backHome()}" immediate="true" />
 			</h:panelGrid>
 		</h:form>
 		<div>
@@ -35,15 +34,15 @@
 			</h1>
 
 			<h:form id="topicsListForm">
-				<p:dataTable value="#{topicController.topicList}" var="item" border="2" id="topicsTable">
-					<p:column>
+				<p:dataTable value="#{topicController.topicList}" var="item" border="2" id="topicsTable" styleClass="fixed-size">
+					<p:column width="5">
 						<f:facet name="header">
 							<h:outputText value="#{msg['topic.id']}" />
 						</f:facet>
 						<h:outputText value="#{item.id}" />
 					</p:column>
 
-					<p:column>
+					<p:column width="100">
 						<f:facet name="header">
 							<h:outputText value="#{msg['topic.name']}" />
 						</f:facet>
@@ -57,18 +56,21 @@
 						<h:outputText value="#{item.description}" />
 					</p:column>
 
-					<p:column>
+					<p:column width="80">
 						<f:facet name="header">
 							<h:outputText value="#{msg['action.title']}" />
 						</f:facet>
-						<p:commandLink value="#{msg['action.view']}" action="#{topicController.viewTopic(item)}">
+						<p:commandLink action="#{topicController.viewTopic(item)}" id="linkSearch">
 							<i class="fa fa-fw fa-search"/>
+							<p:tooltip for="linkSearch" value="#{msg['action.view']}" position="bottom"/>
 						</p:commandLink> |
-                        <p:commandLink value="#{msg['action.edit']}" action="#{topicController.updateSelectedTopic(item)}">
+                        <p:commandLink action="#{topicController.updateSelectedTopic(item)}" id="linkEdit">
                         	<i class="fa fa-fw fa-pencil"/>
+                        	<p:tooltip for="linkEdit" value="#{msg['action.edit']}" position="bottom"/>
                         </p:commandLink> |
-                        <p:commandLink oncomplete="PF('dialog').show()">
+                        <p:commandLink oncomplete="PF('dialog').show()" id="linkRemove">
 							<i class="fa fa-fw fa-remove"/>
+							<p:tooltip for="linkRemove" value="#{msg['action.delete']}" position="bottom"/>
 							<f:setPropertyActionListener value="#{item}" target="#{topicController.selectedTopic}" />
 						</p:commandLink>
 					</p:column>

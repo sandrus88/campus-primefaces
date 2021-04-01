@@ -38,6 +38,12 @@
                         </h:panelGrid> 
                             <br></br>
                             <br></br>
+                            <div id="headerHome" align="center">
+                        		<p:commandLink action="#{studentController.backHome()}" id="linkHome">
+                            		<i class="fa fa-fw fa-home" style="font-size: 2rem"/>
+									<p:tooltip for="linkHome" value="#{msg['home']}" position="bottom"/>
+								</p:commandLink>
+                        	</div>
                         </h:form>
                     </div>
                 </div>

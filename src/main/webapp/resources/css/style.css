@@ -41,3 +41,8 @@ h3 {
     width: 23cm;
     box-shadow: 0 0 11px rgb(0 0 0 / 50%);
 }
+
+.fixed-size {
+    table-layout: fixed;
+    white-space: nowrap;
+}
