@@ -29,21 +29,19 @@
                         </h3>
 
                         <h:form>
-                        <h:panelGrid columns="2" border="0">
+                        <h:panelGrid columns="3" border="0">
                         	<h:outputLabel value="#{msg['home.manage.selectLanguage']}"/>
                             <p:selectOneMenu value="#{localeBean.language}" onchange="submit()">
                                 <f:selectItem itemValue="en" itemLabel="#{msg['home.manage.selectedLanguage.en']}"/>
                                 <f:selectItem itemValue="it" itemLabel="#{msg['home.manage.selectedLanguage.it']}"/>
                             </p:selectOneMenu>
+                            <p:commandLink action="#{studentController.backHome()}" id="linkHome">
+                            	<i class="fa fa-fw fa-home" style="font-size: 2rem"/>
+								<p:tooltip for="linkHome" value="#{msg['home']}" position="bottom"/>
+							</p:commandLink>
                         </h:panelGrid> 
                             <br></br>
                             <br></br>
-                            <div id="headerHome" align="center">
-                        		<p:commandLink action="#{studentController.backHome()}" id="linkHome">
-                            		<i class="fa fa-fw fa-home" style="font-size: 2rem"/>
-									<p:tooltip for="linkHome" value="#{msg['home']}" position="bottom"/>
-								</p:commandLink>
-                        	</div>
                         </h:form>
                     </div>
                 </div>

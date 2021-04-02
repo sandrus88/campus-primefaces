@@ -1,0 +1,47 @@
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:p="http://primefaces.org/ui">
+
+<p:dialog widgetVar="dialogTopics" showEffect="fade" hideEffect="fade" modal="true" width="350" resizable="false" header="#{msg['course.topics.title']}" position="center" draggable="false">
+	<h:form id="courseTopicForm">
+		<p:dataTable value="#{courseController.allTopics}" var="topic" border="0" id="courseTopicsTable" styleClass="fixed-size">
+			<p:column width="5">
+				<f:facet name="header">
+					<h:outputText value="#{msg['topic.id']}" />
+				</f:facet>
+				<h:outputText value="#{topic.id}" />
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="#{msg['topic.name']}" />
+				</f:facet>
+				<h:outputText value="#{topic.name}" />
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="#{msg['topic.description']}" />
+				</f:facet>
+				<h:outputText value="#{topic.description}" />
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="#{msg['action.selection']}" />
+				</f:facet>
+				<p:selectBooleanCheckbox id="selectionTopic" value="#{topic.checked}" />
+			</p:column>
+		</p:dataTable>
+
+		<h:panelGrid border="0" columns="2">
+			<p:commandButton value="#{msg['save']}" actionListener="#{courseController.updateCourseTopics(courseController.selectedCourse)}" update="courseListForm" oncomplete="PF('dialogTopics').show()" />
+			<p:commandButton value="#{msg['back']}" actionListener="#{courseController.cleanAllTopics()}" update="courseTopicForm" oncomplete="PF('dialogTopics').hide()" />
+		</h:panelGrid>
+		
+	</h:form>
+</p:dialog>
+
+</html>

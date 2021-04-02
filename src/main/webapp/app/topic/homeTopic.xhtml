@@ -15,11 +15,11 @@
 			</h3>
 			<h:panelGrid border="0" columns="3">
 				<h:outputLabel for="name" value="#{msg['topic.name']}*" />
-				<p:inputText id="name" value="#{topicController.newName}" required="true" label="#{msg['topic.name']}" />
+				<p:inputText id="name" value="#{topicController.newName}" required="true" label="#{msg['topic.name']}" maxlength="20"/>
 				<p:message for="name" style="color:red" />
 
 				<h:outputLabel for="description" value="#{msg['topic.description']}" />
-				<p:inputText id="description" value="#{topicController.newDescription}" />
+				<p:inputText id="description" value="#{topicController.newDescription}" maxlength="20"/>
 				<h:outputText />
 			</h:panelGrid>
 
@@ -75,12 +75,15 @@
 						</p:commandLink>
 					</p:column>
 				</p:dataTable>
-				<p:dialog widgetVar="dialog" showEffect="fade" hideEffect="fade" modal="true" width="350" resizable="false">
-					<h:outputText value="#{msg['popup.message.delete']}"/><br/>
-					<p:commandButton value="#{msg['popup.delete.yes']}" actionListener="#{topicController.deleteTopic(topicController.selectedTopic)}" styleClass="ui-confirmdialog-yes" update="@form" oncomplete="PF('dialog').hide()"/>
-            		<p:commandButton value="#{msg['popup.delete.no']}" styleClass="ui-confirmdialog-no ui-button-flat" onclick="PF('dialog').hide()"/>
-				</p:dialog>
 			</h:form>
+			
+			<p:dialog widgetVar="dialog" showEffect="fade" hideEffect="fade" modal="true" width="350" resizable="false" header="#{msg['popup.confirm']}" position="center" draggable="false">
+				<h:form>	
+					<h:outputText value="#{msg['popup.message.delete']}"/><br/><br/>
+					<p:commandButton value="#{msg['popup.delete.yes']}" actionListener="#{topicController.deleteTopic(topicController.selectedTopic)}" styleClass="ui-confirmdialog-yes" update="topicsListForm" oncomplete="PF('dialog').hide()"/>
+            		<p:commandButton value="#{msg['popup.delete.no']}" styleClass="ui-confirmdialog-no ui-button-flat" onclick="PF('dialog').hide()"/>
+				</h:form>
+			</p:dialog>
 		</div>
 	</ui:define>
 </ui:composition>

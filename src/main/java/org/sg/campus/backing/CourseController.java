@@ -51,7 +51,12 @@ public class CourseController {
 			}
 		}
 		System.out.println("viewTopics: " + selectedCourse);
-//		return "/app/course/courseTopicsList.xhtml?faces-redirect=true";
+	}
+	
+	public int topicsNumber(Course course) {
+		selectedCourse = course;
+		int topics = selectedCourse.getTopicList().size();
+		return topics;
 	}
 
 	public void cleanAllTopics() {
@@ -59,12 +64,6 @@ public class CourseController {
 			final Topic topic = allTopics.get(i);
 			topic.setChecked(false);
 		}
-	}
-
-	public String goBack() {
-//		cleanAllTopics();
-		System.out.println("All topics: " + allTopics);
-		return "/app/course/homeCourse.xhtml?faces-redirect=true";
 	}
 
 	public void addCourse() {

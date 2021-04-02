@@ -16,21 +16,21 @@
 			<h:panelGrid border="0" columns="3">
 
 				<h:outputLabel for="name" value="#{msg['student.name']}*" />
-				<p:inputText id="name" value="#{studentController.newName}" required="true" label="#{msg['student.name']}" />
+				<p:inputText id="name" value="#{studentController.newName}" required="true" label="#{msg['student.name']}" maxlength="20"/>
 				<p:message for="name" style="color:red" />
 
 				<h:outputLabel for="surname" value="#{msg['student.surname']}*" />
-				<p:inputText id="surname" value="#{studentController.newSurname}" required="true" label="#{msg['student.surname']}" />
+				<p:inputText id="surname" value="#{studentController.newSurname}" required="true" label="#{msg['student.surname']}" maxlength="20"/>
 				<p:message for="surname" style="color:red" />
 
 				<h:outputLabel for="email" value="#{msg['student.email']}" />
-				<p:inputText id="email" value="#{studentController.newEmail}">
+				<p:inputText id="email" value="#{studentController.newEmail}" maxlength="20">
 					<f:validator validatorId="emailValidator" />
 				</p:inputText>
 				<p:message for="email" style="color:red" />
 
 				<h:outputLabel for="jobTitle" value="#{msg['student.jobTitle']}" />
-				<p:inputText id="jobTitle" value="#{studentController.newJobTitle}" />
+				<p:inputText id="jobTitle" value="#{studentController.newJobTitle}" maxlength="20"/>
 				<h:outputText />
 
 				<h:outputLabel for="paymentType" value="#{msg['student.paymentType']}" />
@@ -69,21 +69,21 @@
 						<h:outputText value="#{item.id}" />
 					</p:column>
 
-					<p:column width="40">
+					<p:column width="90">
 						<f:facet name="header">
 							<h:outputText value="#{msg['student.name']}" />
 						</f:facet>
 						<h:outputText value="#{item.name}" />
 					</p:column>
 
-					<p:column width="50">
+					<p:column width="80">
 						<f:facet name="header">
 							<h:outputText value="#{msg['student.surname']}" />
 						</f:facet>
 						<h:outputText value="#{item.surname}" />
 					</p:column>
 
-					<p:column width="130">
+					<p:column width="100">
 						<f:facet name="header">
 							<h:outputText value="#{msg['student.email']}" />
 						</f:facet>
@@ -97,21 +97,21 @@
 						<h:outputText value="#{item.jobTitle}" />
 					</p:column>
 
-					<p:column width="80">
+					<p:column width="90">
 						<f:facet name="header">
 							<h:outputText value="#{msg['student.paymentType']}" />
 						</f:facet>
 						<h:outputText value="#{studentController.showPaymentType(item.paymentType)}" />
 					</p:column>
 
-					<p:column width="50">
+					<p:column width="40">
 						<f:facet name="header">
 							<h:outputText value="#{msg['student.sex']}" />
 						</f:facet>
 						<h:outputText value="#{item.sex}" />
 					</p:column>
 
-					<p:column width="80">
+					<p:column width="50">
 						<f:facet name="header">
 							<h:outputText value="#{msg['action.title']}" />
 						</f:facet>
@@ -130,12 +130,15 @@
 						</p:commandLink>
 					</p:column>
 				</p:dataTable>
-				<p:dialog widgetVar="dialog" showEffect="fade" hideEffect="fade" modal="true" width="350" resizable="false">
-					<h:outputText value="#{msg['popup.message.delete']}"/><br/>
-					<p:commandButton value="#{msg['popup.delete.yes']}" actionListener="#{studentController.deleteStudent(studentController.selectedStudent)}" styleClass="ui-confirmdialog-yes" update="@form" oncomplete="PF('dialog').hide()"/>
-            		<p:commandButton value="#{msg['popup.delete.no']}" styleClass="ui-confirmdialog-no ui-button-flat" onclick="PF('dialog').hide()"/>
-				</p:dialog>
 			</h:form>
+			
+			<p:dialog widgetVar="dialog" showEffect="fade" hideEffect="fade" modal="true" width="350" resizable="false" header="#{msg['popup.confirm']}" position="center" draggable="false">
+				<h:form>	
+					<h:outputText value="#{msg['popup.message.delete']}"/><br/><br/>
+					<p:commandButton value="#{msg['popup.delete.yes']}" actionListener="#{studentController.deleteStudent(studentController.selectedStudent)}" styleClass="ui-confirmdialog-yes" update="studentListForm" oncomplete="PF('dialog').hide()"/>
+            		<p:commandButton value="#{msg['popup.delete.no']}" styleClass="ui-confirmdialog-no ui-button-flat" onclick="PF('dialog').hide()"/>
+				</h:form>
+			</p:dialog>
 		</div>
 	</ui:define>
 </ui:composition>
