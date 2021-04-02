@@ -29,6 +29,7 @@ public class CourseController {
 	private boolean newEnabled;
 
 	public void updateCourseTopics(Course course) {
+		selectedCourse = course;
 		List<Topic> checkedTopics = new ArrayList<Topic>();
 		for (int i = 0; i < allTopics.size(); i++) {
 			final Topic topic = allTopics.get(i);
