@@ -29,6 +29,7 @@ public class CourseController {
 	private boolean newEnabled;
 
 	public void updateCourseTopics(Course course) {
+		selectedCourse = course;
 		List<Topic> checkedTopics = new ArrayList<Topic>();
 		for (int i = 0; i < allTopics.size(); i++) {
 			final Topic topic = allTopics.get(i);
@@ -37,7 +38,6 @@ public class CourseController {
 			}
 		}
 		selectedCourse.setTopicList(checkedTopics);
-		cleanAllTopics();
 		System.out.println("Topics selected for course id" + selectedCourse.getId() + ": " + checkedTopics);
 	}
 	
@@ -50,7 +50,7 @@ public class CourseController {
 				topic.setChecked(true);
 			}
 		}
-		System.out.println(selectedCourse);
+		System.out.println("viewTopics: " + selectedCourse);
 //		return "/app/course/courseTopicsList.xhtml?faces-redirect=true";
 	}
 
@@ -62,7 +62,7 @@ public class CourseController {
 	}
 
 	public String goBack() {
-		cleanAllTopics();
+//		cleanAllTopics();
 		System.out.println("All topics: " + allTopics);
 		return "/app/course/homeCourse.xhtml?faces-redirect=true";
 	}

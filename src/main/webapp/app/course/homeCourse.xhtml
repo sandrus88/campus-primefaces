@@ -86,56 +86,59 @@
 							<p:tooltip for="linkRemove" value="#{msg['action.delete']}" position="bottom"/>
 							<f:setPropertyActionListener value="#{item}" target="#{courseController.selectedCourse}" />
 						</p:commandLink> | 
-						<p:commandLink action="#{courseController.viewTopics(item)}" oncomplete="PF('dialogTopics').show()" id="linkTopics">
+						<p:commandLink id="linkTopics" oncomplete="PF('dialogTopics').show()">
 							<i class="fa fa-fw fa-list-alt"/>
 							<p:tooltip for="linkTopics" value="#{msg['course.topics']}" position="bottom"/>
 							<f:setPropertyActionListener value="#{item}" target="#{courseController.selectedCourse}" />
+							<!--<f:actionListener binding="#{courseController.viewTopics(courseController.selectedCourse)}"/>-->
 						</p:commandLink>
 					</p:column>
 				</p:dataTable>
+				
 				<p:dialog widgetVar="dialog" showEffect="fade" hideEffect="fade" modal="true" width="350" resizable="false">
 					<h:outputText value="#{msg['popup.message.delete']}"/><br/>
 					<p:commandButton value="#{msg['popup.delete.yes']}" actionListener="#{courseController.deleteCourse(courseController.selectedCourse)}" styleClass="ui-confirmdialog-yes" update="@form" oncomplete="PF('dialog').hide()"/>
             		<p:commandButton value="#{msg['popup.delete.no']}" styleClass="ui-confirmdialog-no ui-button-flat" onclick="PF('dialog').hide()"/>
 				</p:dialog>
-				<p:dialog widgetVar="dialogTopics" showEffect="fade" hideEffect="fade" modal="true" width="350" resizable="false" header="#{msg['course.topics.title']}">
-				<h:form>
-				<p:dataTable value="#{courseController.allTopics}" var="topic" border="0" id="courseTopicsTable" styleClass="fixed-size">
-				<p:column width="5">
-					<f:facet name="header">
-						<h:outputText value="#{msg['topic.id']}" />
-					</f:facet>
-					<h:outputText value="#{topic.id}" />
-				</p:column>
-
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="#{msg['topic.name']}" />
-					</f:facet>
-					<h:outputText value="#{topic.name}" />
-				</p:column>
-
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="#{msg['topic.description']}" />
-					</f:facet>
-					<h:outputText value="#{topic.description}" />
-				</p:column>
-
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="#{msg['action.selection']}" />
-					</f:facet>
-					<p:selectBooleanCheckbox id="selectionTopic" value="#{topic.checked}" />
-				</p:column>
-			</p:dataTable>
-
-			<h:panelGrid border="0" columns="2">
-				<p:commandButton value="#{msg['save']}" actionListener="#{courseController.updateCourseTopics(courseController.selectedCourse)}" oncomplete="PF('dialogTopics').hide()"/>
-				<p:commandButton value="#{msg['back']}" onclick="PF('dialogTopics').hide()" />
-			</h:panelGrid>
-				</h:form>
 				
+				<!-- //spostare questo file in ugn file dlgTopicList -->
+				<p:dialog widgetVar="dialogTopics" showEffect="fade" hideEffect="fade" modal="true" width="350" resizable="false" header="#{msg['course.topics.title']}">
+					<h:form id="courseTopicForm">
+						<p:dataTable value="#{courseController.allTopics}" var="topic" border="0" id="courseTopicsTable" styleClass="fixed-size">
+						<p:column width="5">
+							<f:facet name="header">
+								<h:outputText value="#{msg['topic.id']}" />
+							</f:facet>
+							<h:outputText value="#{topic.id}" />
+						</p:column>
+		
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['topic.name']}" />
+							</f:facet>
+							<h:outputText value="#{topic.name}" />
+						</p:column>
+		
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['topic.description']}" />
+							</f:facet>
+							<h:outputText value="#{topic.description}" />
+						</p:column>
+		
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['action.selection']}" />
+							</f:facet>
+							<p:selectBooleanCheckbox id="selectionTopic" value="#{topic.checked}" />
+						</p:column>
+					</p:dataTable>
+		
+					<h:panelGrid border="0" columns="2">
+						<p:commandButton value="#{msg['save']}" actionListener="#{courseController.updateCourseTopics(courseController.selectedCourse)}" oncomplete="PF('dialogTopics').show()"/>
+						<p:commandButton value="#{msg['back']}" action="#{courseController.cleanAllTopics()}" oncomplete="PF('dialogTopics').hide()"/>
+					</h:panelGrid>
+				</h:form>
 				</p:dialog>
 			</h:form>
 		</div>
