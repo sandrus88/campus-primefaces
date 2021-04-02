@@ -80,21 +80,23 @@
 						<p:commandLink action="#{courseController.updateSelectedCourse(item)}" id="linkEdit"> 
 							<i class="fa fa-fw fa-pencil"/>
 							<p:tooltip for="linkEdit" value="#{msg['action.edit']}" position="bottom"/>
-						</p:commandLink> | 
+						</p:commandLink> |
 						<p:commandLink oncomplete="PF('dialog').show()" id="linkRemove">
 							<i class="fa fa-fw fa-remove"/>
 							<p:tooltip for="linkRemove" value="#{msg['action.delete']}" position="bottom"/>
 							<f:setPropertyActionListener value="#{item}" target="#{courseController.selectedCourse}" />
 						</p:commandLink> | 
-						<p:commandLink id="linkTopics" oncomplete="PF('dialogTopics').show()">
+
+						<p:commandLink actionListener="#{courseController.updateCourseTopics(item)}" oncomplete="PF('dialogTopics').show()" id="linkTopics" >
 							<i class="fa fa-fw fa-list-alt"/>
 							<p:tooltip for="linkTopics" value="#{msg['course.topics']}" position="bottom"/>
-							<f:setPropertyActionListener value="#{item}" target="#{courseController.selectedCourse}" />
-							<!--<f:actionListener binding="#{courseController.viewTopics(courseController.selectedCourse)}"/>-->
+							<!--<f:setPropertyActionListener value="#{item}" target="#{courseController.selectedCourse}" />
+							non serve piu perche impostiamo selectedCourse dentor il metodo updateCourseTopics
+							dove facciam oanche la logica di chi mettere checked e chi no-->
 						</p:commandLink>
 					</p:column>
 				</p:dataTable>
-				
+
 				<p:dialog widgetVar="dialog" showEffect="fade" hideEffect="fade" modal="true" width="350" resizable="false">
 					<h:outputText value="#{msg['popup.message.delete']}"/><br/>
 					<p:commandButton value="#{msg['popup.delete.yes']}" actionListener="#{courseController.deleteCourse(courseController.selectedCourse)}" styleClass="ui-confirmdialog-yes" update="@form" oncomplete="PF('dialog').hide()"/>
@@ -138,6 +140,7 @@
 						<p:commandButton value="#{msg['save']}" actionListener="#{courseController.updateCourseTopics(courseController.selectedCourse)}" oncomplete="PF('dialogTopics').show()"/>
 						<p:commandButton value="#{msg['back']}" action="#{courseController.cleanAllTopics()}" oncomplete="PF('dialogTopics').hide()"/>
 					</h:panelGrid>
+
 				</h:form>
 				</p:dialog>
 			</h:form>
