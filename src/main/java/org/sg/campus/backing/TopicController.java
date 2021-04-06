@@ -3,11 +3,13 @@ package org.sg.campus.backing;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
 import org.sg.campus.beans.ApplicationBean;
+import org.sg.campus.domain.Course;
 import org.sg.campus.domain.Topic;
 
 @ManagedBean
@@ -21,6 +23,11 @@ public class TopicController {
 
 	private String newName;
 	private String newDescription;
+	
+	@PostConstruct
+	public void init() {
+		selectedTopic = new Topic();
+	}
 
 	public void addTopic() {
 		Topic topic = new Topic();
@@ -94,7 +101,7 @@ public class TopicController {
 		this.selectedTopic = selectedTopic;
 	}
 
-	private void cleanForm() {
+	public void cleanForm() {
 		setNewName(null);
 		setNewDescription(null);
 	}

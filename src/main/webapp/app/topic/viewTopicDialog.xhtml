@@ -1,0 +1,28 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="detailTopicForm">
+		<p:dialog widgetVar="dialogViewTopic" showEffect="fade" hideEffect="fade" modal="true" width="350" resizable="false" position="center" draggable="false" styleClass="containerBox">
+
+			<f:facet name="header">
+				<h:outputText value="#{msg['topic.view.title']} #{topicController.selectedTopic.name}" />
+			</f:facet>
+
+			<h:panelGrid columns="2" border="0">
+				<p:outputLabel value="#{msg['topic.id']}" />
+				<h:outputText id="id" value="#{topicController.selectedTopic.id}" />
+
+				<p:outputLabel value="#{msg['topic.name']}" />
+				<h:outputText id="name" value="#{topicController.selectedTopic.name}" />
+
+				<p:outputLabel value="#{msg['topic.description']}" />
+				<h:outputText id="description" value="#{topicController.selectedTopic.description}" />
+			</h:panelGrid>
+
+			<p:commandButton value="#{msg['close']}" oncomplete="PF('dialogViewTopic').hide()" />
+		</p:dialog>
+	</h:form>
+</html>

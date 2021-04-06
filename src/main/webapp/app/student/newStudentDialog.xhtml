@@ -1,0 +1,60 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="newStudentForm">
+		<p:dialog widgetVar="dialogNewStudent" showEffect="fade" hideEffect="fade" modal="true" width="600" resizable="false" position="center" draggable="false" styleClass="containerBox">
+
+			<f:facet name="header">
+				<h:outputText value="#{msg['student.add']}" />
+			</f:facet>
+		
+			<p:outputPanel id="panel">
+				<h:panelGrid border="0" columns="3">
+
+					<p:outputLabel for="name" value="#{msg['student.name']}" />
+					<p:inputText id="name" value="#{studentController.newName}" required="true" maxlength="20" />
+					<p:message for="name" style="color:red" />
+
+					<p:outputLabel for="surname" value="#{msg['student.surname']}" />
+					<p:inputText id="surname" value="#{studentController.newSurname}" required="true" maxlength="20" />
+					<p:message for="surname" style="color:red" />
+
+					<p:outputLabel for="email" value="#{msg['student.email']}" />
+					<p:inputText id="email" value="#{studentController.newEmail}" maxlength="30">
+						<f:validator validatorId="emailValidator" />
+					</p:inputText>
+					<p:message for="email" style="color:red" />
+
+					<p:outputLabel for="jobTitle" value="#{msg['student.jobTitle']}" />
+					<p:inputText id="jobTitle" value="#{studentController.newJobTitle}" maxlength="20" />
+					<h:outputText />
+
+					<p:outputLabel for="paymentType" value="#{msg['student.paymentType']}" />
+					<p:selectOneMenu id="paymentType" value="#{studentController.newPaymentType}">
+						<f:selectItem itemLabel="" />
+						<f:selectItems value="#{studentController.getEnumValues()}" var="payment" itemValue="#{payment}" itemLabel="#{studentController.showPaymentType(payment)}" />
+					</p:selectOneMenu>
+					<h:outputText />
+
+					<p:outputLabel for="sex" value="#{msg['student.sex']}" />
+					<p:selectOneRadio id="sex" value="#{studentController.newSex}" required="true">
+						<f:selectItem itemValue="#{msg['student.male']}" itemLabel="M" />
+						<f:selectItem itemValue="#{msg['student.female']}" itemLabel="F" />
+					</p:selectOneRadio>
+					<p:message for="sex" style="color:red" />
+				</h:panelGrid>
+			</p:outputPanel>
+
+			<h:panelGrid border="0" columns="3">
+				<p:commandButton value="#{msg['save']}" actionListener="#{studentController.addStudent()}" update="studentListForm newStudentForm dashboardForm" oncomplete="PF('dialogNewStudent').show()" />
+				<p:commandButton value="#{msg['reset']}">
+					<p:ajax update="panel" resetValues="true"/>
+				</p:commandButton>
+				<p:commandButton value="#{msg['close']}" onclick="PF('dialogNewStudent').hide()" />
+			</h:panelGrid>
+		</p:dialog>
+	</h:form>
+</html>

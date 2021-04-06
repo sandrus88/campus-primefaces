@@ -3,12 +3,14 @@ package org.sg.campus.backing;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
 import org.sg.campus.beans.ApplicationBean;
 import org.sg.campus.domain.Course;
+import org.sg.campus.domain.Student;
 import org.sg.campus.domain.Topic;
 import org.sg.campus.util.JsfUtil;
 
@@ -27,6 +29,11 @@ public class CourseController {
 	private String newName;
 	private String newDescription;
 	private boolean newEnabled;
+	
+	@PostConstruct
+	public void init() {
+		selectedCourse = new Course();
+	}
 
 	public void updateCourseTopics(Course course) {
 		selectedCourse = course;
@@ -165,7 +172,7 @@ public class CourseController {
 		return allTopics;
 	}
 
-	private void cleanForm() {
+	public void cleanForm() {
 		setNewName(null);
 		setNewDescription(null);
 		setNewEnabled(false);

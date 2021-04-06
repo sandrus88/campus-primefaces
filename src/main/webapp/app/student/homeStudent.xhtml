@@ -3,62 +3,65 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-<ui:composition template="/template/pageLayout.xhtml">
-	<ui:define name="title">
-		<h:outputText value="#{msg['student.home.title']}" />
-	</ui:define>
-	
-	<ui:define name="content">
-		<h:form id="newStudentForm">
+	<ui:composition template="/template/pageLayout.xhtml">
+		<ui:define name="content">
 			<h3>
 				<h:outputText value="#{msg['student.home.title']}" />
 			</h3>
-			<h:panelGrid border="0" columns="3">
+			
+			<h1>
+				<h:outputText value="#{msg['student.search']}" />
+			</h1>
+			
+			<h:form id="searchStudentForm">
+				<h:panelGrid border="0" columns="9" >
+	
+					<p:outputLabel for="name" value="#{msg['student.name']}" />
+					<p:inputText id="name" value="#{studentController.newName}" required="true" maxlength="20"/>
+					<p:message for="name" style="color:red" />
+				
+					<p:outputLabel for="email" value="#{msg['student.email']}" />
+					<p:inputText id="email" value="#{studentController.newEmail}" maxlength="20">
+						<f:validator validatorId="emailValidator" />
+					</p:inputText>
+					<p:message for="email" style="color:red" />
+				
+					<p:outputLabel for="paymentType" value="#{msg['student.paymentType']}" />
+					<p:selectOneMenu id="paymentType" value="#{studentController.newPaymentType}">
+						<f:selectItem itemLabel="" />
+						<f:selectItems value="#{studentController.getEnumValues()}" var="payment" itemValue="#{payment}" itemLabel="#{studentController.showPaymentType(payment)}" />
+					</p:selectOneMenu>
+					<h:outputText/>
 
-				<h:outputLabel for="name" value="#{msg['student.name']}*" />
-				<p:inputText id="name" value="#{studentController.newName}" required="true" label="#{msg['student.name']}" maxlength="20"/>
-				<p:message for="name" style="color:red" />
+					<p:outputLabel for="surname" value="#{msg['student.surname']}" />
+					<p:inputText id="surname" value="#{studentController.newSurname}" required="true" maxlength="20"/>
+					<p:message for="surname" style="color:red" />
 
-				<h:outputLabel for="surname" value="#{msg['student.surname']}*" />
-				<p:inputText id="surname" value="#{studentController.newSurname}" required="true" label="#{msg['student.surname']}" maxlength="20"/>
-				<p:message for="surname" style="color:red" />
+					<p:outputLabel for="jobTitle" value="#{msg['student.jobTitle']}" />
+					<p:inputText id="jobTitle" value="#{studentController.newJobTitle}" maxlength="20"/>
+					<h:outputText/>
+				
+					<p:outputLabel for="sex" value="#{msg['student.sex']}" />
+					<p:selectOneRadio id="sex" value="#{studentController.newSex}" required="true">
+						<f:selectItem itemLabel="M" itemValue="#{msg['student.male']}"/>
+						<f:selectItem itemLabel="F" itemValue="#{msg['student.female']}"/>
+					</p:selectOneRadio>
+					<p:message for="sex" style="color:red" />
+				</h:panelGrid>
 
-				<h:outputLabel for="email" value="#{msg['student.email']}" />
-				<p:inputText id="email" value="#{studentController.newEmail}" maxlength="20">
-					<f:validator validatorId="emailValidator" />
-				</p:inputText>
-				<p:message for="email" style="color:red" />
-
-				<h:outputLabel for="jobTitle" value="#{msg['student.jobTitle']}" />
-				<p:inputText id="jobTitle" value="#{studentController.newJobTitle}" maxlength="20"/>
-				<h:outputText />
-
-				<h:outputLabel for="paymentType" value="#{msg['student.paymentType']}" />
-				<p:selectOneMenu id="paymentType" value="#{studentController.newPaymentType}">
-					<f:selectItem itemLabel="" />
-					<f:selectItems value="#{studentController.getEnumValues()}" var="payment" itemValue="#{payment}" itemLabel="#{studentController.showPaymentType(payment)}" />
-				</p:selectOneMenu>
-				<h:outputText />
-
-				<h:outputLabel for="sex" value="#{msg['student.sex']}*" />
-				<p:selectOneRadio id="sex" value="#{studentController.newSex}" required="true" label="#{msg['student.sex']}">
-					<f:selectItem itemValue="#{msg['student.male']}" itemLabel="M" />
-					<f:selectItem itemValue="#{msg['student.female']}" itemLabel="F" />
-				</p:selectOneRadio>
-				<p:message for="sex" style="color:red" />
-			</h:panelGrid>
-
-			<h:panelGrid border="0" columns="2">
-				<p:commandButton value="#{msg['save']}" action="#{studentController.addStudent()}" ajax="false"/>
-				<p:commandButton value="#{msg['reset']}" action="#{studentController.reset()}" immediate="true" />
-			</h:panelGrid>
-		</h:form>
-
-		<div>
+				<h:panelGrid border="0" columns="2">
+					<p:commandButton value="#{msg['search']}" action="#{studentController.addStudent()}" ajax="false"/>
+					<p:commandButton value="#{msg['clear']}" action="#{studentController.reset()}" immediate="true" />
+				</h:panelGrid>
+			</h:form>
+			
 			<h1>
 				<h:outputText value="#{msg['student.home.table']}" />
+				<p:commandLink oncomplete="PF('dialogNewStudent').show()" id="linkAddStudent">
+					<i class="fa fa-fw fa-plus" style="font-size: 2rem; margin-right: 30px;"/>
+					<p:tooltip for="linkAddStudent" value="#{msg['add']}" position="bottom"/>
+				</p:commandLink>
 			</h1>
-
 			<h:form id="studentListForm">
 				<p:dataTable value="#{studentController.studentList}" var="item" border="2" id="studentsTable" styleClass="fixed-size">
 
@@ -115,13 +118,15 @@
 						<f:facet name="header">
 							<h:outputText value="#{msg['action.title']}" />
 						</f:facet>
-						<p:commandLink action="#{studentController.viewStudent(item)}" id="linkSearch">
+						<p:commandLink oncomplete="PF('dialogViewStudent').show()" update="detailStudentForm" id="linkSearch">
 							<i class="fa fa-fw fa-search"/>
 							<p:tooltip for="linkSearch" value="#{msg['action.view']}" position="bottom"/>
+							<f:setPropertyActionListener value="#{item}" target="#{studentController.selectedStudent}" />
 						</p:commandLink> |
-						<p:commandLink action="#{studentController.updateSelectedStudent(item)}" id="linkEdit">
+						<p:commandLink oncomplete="PF('dialogEditStudent').show()" update="studentEditForm" id="linkEdit">
 							<i class="fa fa-fw fa-pencil"/>
 							<p:tooltip for="linkEdit" value="#{msg['action.edit']}" position="bottom"/>
+							<f:setPropertyActionListener value="#{item}" target="#{studentController.selectedStudent}" />
 						</p:commandLink> |
 						<p:commandLink oncomplete="PF('dialog').show()" id="linkRemove">
 							<i class="fa fa-fw fa-remove"/>
@@ -139,9 +144,14 @@
             		<p:commandButton value="#{msg['popup.delete.no']}" styleClass="ui-confirmdialog-no ui-button-flat" onclick="PF('dialog').hide()"/>
 				</h:form>
 			</p:dialog>
-		</div>
-	</ui:define>
-</ui:composition>
+			
+			<ui:include src="editStudentDialog.xhtml" />
+			<ui:include src="viewStudentDialog.xhtml" />
+			<ui:include src="newStudentDialog.xhtml" />
+
+			
+		</ui:define>
+	</ui:composition>
 </html>
 
 

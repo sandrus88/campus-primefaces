@@ -1,0 +1,58 @@
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="studentEditForm">
+		<p:dialog widgetVar="dialogEditStudent" showEffect="fade" hideEffect="fade" modal="true" width="600" resizable="false" position="center" draggable="false" styleClass="containerBox">
+
+			<f:facet name="header">
+				<h:outputText value="#{msg['student.edit.title']} #{studentController.selectedStudent.name} #{studentController.selectedStudent.surname}" />
+			</f:facet>
+
+			<h:panelGrid columns="3" border="0">
+				<p:outputLabel for="id" value="#{msg['student.id']}" />
+				<p:inputText id="id" value="#{studentController.selectedStudent.id}" disabled="true" />
+				<h:outputText />
+
+				<p:outputLabel for="name" value="#{msg['student.name']}" />
+				<p:inputText id="name" value="#{studentController.selectedStudent.name}" required="true" maxlength="20"/>
+				<p:message for="name" style="color:red" />
+
+				<p:outputLabel for="surname" value="#{msg['student.surname']}" />
+				<p:inputText id="surname" value="#{studentController.selectedStudent.surname}" required="true" maxlength="20"/>
+				<p:message for="surname" style="color:red" />
+
+				<p:outputLabel for="email" value="#{msg['student.email']}" />
+				<p:inputText id="email" value="#{studentController.selectedStudent.email}" maxlength="30">
+					<f:validator validatorId="emailValidator" />
+				</p:inputText>
+				<p:message for="email" style="color:red" />
+
+				<p:outputLabel for="jobTitle" value="#{msg['student.jobTitle']}" />
+				<p:inputText id="jobTitle" value="#{studentController.selectedStudent.jobTitle}" maxlength="20"/>
+				<h:outputText />
+
+				<p:outputLabel for="paymentType" value="#{msg['student.paymentType']}" />
+				<p:selectOneMenu id="paymentType" value="#{studentController.selectedStudent.paymentType}">
+					<f:selectItem />
+					<f:selectItems value="#{studentController.getEnumValues()}" var="payment" itemValue="#{payment}" itemLabel="#{studentController.showPaymentType(payment)}" />
+				</p:selectOneMenu>
+				<h:outputText />
+
+				<p:outputLabel for="sex" value="#{msg['student.sex']}" />
+				<p:selectOneRadio id="sex" value="#{studentController.selectedStudent.sex}" required="true">
+					<f:selectItem itemValue="#{msg['student.male']}" itemLabel="M" />
+					<f:selectItem itemValue="#{msg['student.female']}" itemLabel="F" />
+				</p:selectOneRadio>
+				<p:message for="sex" style="color:red" />
+			</h:panelGrid>
+
+			<h:panelGrid border="0" columns="2">
+				<p:commandButton value="#{msg['save']}" update="studentListForm studentEditForm" oncomplete="PF('dialogEditStudent').show()" />
+				<p:commandButton value="#{msg['close']}" onclick="PF('dialogEditStudent').hide()" />
+			</h:panelGrid>
+		</p:dialog>
+	</h:form>
+</html>

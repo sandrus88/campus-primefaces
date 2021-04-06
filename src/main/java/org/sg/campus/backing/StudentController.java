@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -30,6 +31,11 @@ public class StudentController {
 
 	private List<Student> studentList = new ArrayList<Student>();
 	private Student selectedStudent;
+	
+	@PostConstruct
+	public void init() {
+		selectedStudent = new Student();
+	}
 
 	public void addStudent() {
 		Student student = new Student();
@@ -45,7 +51,7 @@ public class StudentController {
 		cleanForm();
 	}
 
-	private void cleanForm() {
+	public void cleanForm() {
 		setNewName(null);
 		setNewSurname(null);
 		setNewEmail(null);
@@ -79,10 +85,10 @@ public class StudentController {
 		return label;
 	}
 
-	public String updateSelectedStudent(Student student) {
+	public void updateSelectedStudent(Student student) {
 		selectedStudent = student;
 		System.out.println("Going in edit mode for student: " + selectedStudent);
-		return "/app/student/editStudent.xhtml?faces-redirect=true";
+//		return "/app/student/editStudent.xhtml?faces-redirect=true";
 	}
 
 	public String updateStudent() {

@@ -11,7 +11,9 @@ body {
 
 h1 {
   color:#243446;
-  text-align: center;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
 }
 h2 {
   color:#243446;
@@ -27,7 +29,7 @@ h3 {
 }
 
 #footer{
-    background-color: #FFDFDF;
+	background-color: #FFDFDF;
 }
 
 
@@ -46,3 +48,32 @@ h3 {
     table-layout: fixed;
     white-space: nowrap;
 }
+
+#linkAddStudent {
+	align-content: right;
+}
+
+.descriptionCourse {
+	display:inline-block;
+    max-width: 69ch;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.descriptionTopic {
+	display:inline-block;
+    max-width: 95ch;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.descriptionTopicOnDialog {
+	display:inline-block;
+    max-width: 10ch;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+

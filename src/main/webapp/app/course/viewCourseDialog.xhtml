@@ -1,0 +1,31 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="detailCourseForm">
+		<p:dialog widgetVar="dialogViewCourse" showEffect="fade" hideEffect="fade" modal="true" width="350" resizable="false" position="center" draggable="false" styleClass="containerBox">
+
+			<f:facet name="header">
+				<h:outputText value="#{msg['course.view.title']} #{courseController.selectedCourse.name}" />
+			</f:facet>
+
+			<h:panelGrid columns="2" border="0">
+				<p:outputLabel value="#{msg['course.id']}" />
+				<h:outputText value="#{courseController.selectedCourse.id}" />
+
+				<p:outputLabel value="#{msg['course.name']}" />
+				<h:outputText value="#{courseController.selectedCourse.name}" />
+
+				<p:outputLabel value="#{msg['course.description']}" />
+				<h:outputText value="#{courseController.selectedCourse.description}" />
+
+				<p:outputLabel value="#{msg['course.enabled']}" />
+				<p:selectBooleanCheckbox value="#{courseController.selectedCourse.enabled}" disabled="true" />
+			</h:panelGrid>
+
+			<p:commandButton value="#{msg['close']}" oncomplete="PF('dialogViewCourse').hide()" />
+		</p:dialog>
+	</h:form>
+</html>

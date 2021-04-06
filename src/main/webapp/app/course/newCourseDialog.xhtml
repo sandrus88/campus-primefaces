@@ -1,0 +1,39 @@
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="newCourseForm">
+		<p:dialog widgetVar="dialogNewCourse" showEffect="fade" hideEffect="fade" modal="true" width="600" resizable="false" position="center" draggable="false" styleClass="containerBox">
+
+			<f:facet name="header">
+				<h:outputText value="#{msg['course.add']}" />
+			</f:facet>
+		
+			<p:outputPanel id="panel">
+				<h:panelGrid border="0" columns="3">
+					<p:outputLabel for="name" value="#{msg['course.name']}" />
+					<p:inputText id="name" value="#{courseController.newName}" required="true" maxlength="20" />
+					<p:message for="name" style="color:red" />
+
+					<p:outputLabel for="description" value="#{msg['course.description']}" />
+					<p:inputTextarea id="description" value="#{courseController.newDescription}" rows="1" autoResize="false" />
+					<h:outputText />
+
+					<p:outputLabel for="enabled" value="#{msg['course.enabled']}" />
+					<p:selectBooleanCheckbox id="enabled" value="#{courseController.newEnabled}" />
+					<h:outputText />
+				</h:panelGrid>
+			</p:outputPanel>
+
+			<h:panelGrid border="0" columns="3">
+				<p:commandButton value="#{msg['save']}" actionListener="#{courseController.addCourse()}" update="courseListForm newCourseForm dashboardForm" oncomplete="PF('dialogNewCourse').show()" />
+				<p:commandButton value="#{msg['reset']}">
+					<p:ajax update="panel" resetValues="true"/>
+				</p:commandButton>	
+				<p:commandButton value="#{msg['close']}" onclick="PF('dialogNewCourse').hide()" />
+			</h:panelGrid>
+		</p:dialog>
+	</h:form>
+</html>

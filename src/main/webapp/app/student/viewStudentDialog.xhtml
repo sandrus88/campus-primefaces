@@ -1,0 +1,40 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="detailStudentForm">
+		<p:dialog widgetVar="dialogViewStudent" showEffect="fade" hideEffect="fade" modal="true" width="350" resizable="false" position="center" draggable="false" styleClass="containerBox">
+
+			<f:facet name="header">
+				<h:outputText value="#{msg['student.view.title']} #{studentController.selectedStudent.name} #{studentController.selectedStudent.surname}" />
+			</f:facet>
+
+			<h:panelGrid columns="2" border="0">
+				<p:outputLabel value="#{msg['student.id']}" />
+				<h:outputText value="#{studentController.selectedStudent.id}" />
+
+				<p:outputLabel value="#{msg['student.name']}" />
+				<h:outputText value="#{studentController.selectedStudent.name}" />
+
+				<p:outputLabel value="#{msg['student.surname']}" />
+				<h:outputText value="#{studentController.selectedStudent.surname}" />
+
+				<p:outputLabel value="#{msg['student.email']}" />
+				<h:outputText value="#{studentController.selectedStudent.email}" />
+
+				<p:outputLabel value="#{msg['student.jobTitle']}" />
+				<h:outputText value="#{studentController.selectedStudent.jobTitle}" />
+
+				<p:outputLabel value="#{msg['student.paymentType']}" />
+				<h:outputText value="#{studentController.showPaymentType(studentController.selectedStudent.paymentType)}" />
+
+				<p:outputLabel value="#{msg['student.sex']}" />
+				<h:outputText value="#{studentController.selectedStudent.sex}" />
+			</h:panelGrid>
+
+			<p:commandButton value="#{msg['close']}" oncomplete="PF('dialogViewStudent').hide()" />
+		</p:dialog>
+	</h:form>
+</html>

@@ -1,0 +1,38 @@
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="courseEditForm">
+		<p:dialog widgetVar="dialogEditCourse" showEffect="fade" hideEffect="fade" modal="true" width="600" resizable="false" position="center" draggable="false" styleClass="containerBox">
+
+			<f:facet name="header">
+				<h:outputText value="#{msg['course.edit.title']} #{courseController.selectedCourse.name}" />
+			</f:facet>
+
+			<h:panelGrid columns="3" border="0">
+				<p:outputLabel for="id" value="#{msg['course.id']}" />
+				<p:inputText id="id" value="#{courseController.selectedCourse.id}" disabled="true" />
+				<h:outputText />
+
+				<p:outputLabel for="name" value="#{msg['course.name']}" />
+				<p:inputText id="name" value="#{courseController.selectedCourse.name}" required="true" maxlength="20"/>
+				<p:message for="name" style="color:red" />
+
+				<p:outputLabel for="description" value="#{msg['course.description']}" />
+				<p:inputTextarea id="description" value="#{courseController.selectedCourse.description}" rows="1" autoResize="false" />
+				<h:outputText />
+
+				<p:outputLabel for="enabled" value="#{msg['course.enabled']}" />
+				<p:selectBooleanCheckbox id="enabled" value="#{courseController.selectedCourse.enabled}" />
+				<h:outputText />
+			</h:panelGrid>
+
+			<h:panelGrid border="0" columns="2">
+				<p:commandButton value="#{msg['save']}" update="courseListForm courseEditForm" oncomplete="PF('dialogEditCourse').show()" />
+				<p:commandButton value="#{msg['close']}" onclick="PF('dialogEditCourse').hide()" />
+			</h:panelGrid>
+		</p:dialog>
+	</h:form>
+</html>
