@@ -14,11 +14,11 @@
 			<p:outputPanel id="panel">
 				<h:panelGrid border="0" columns="3">
 					<p:outputLabel for="name" value="#{msg['course.name']}" />
-					<p:inputText id="name" value="#{courseController.newName}" required="true" maxlength="20" />
-					<p:message for="name" style="color:red" />
+					<p:inputText id="name" value="#{courseController.newName}" required="true" style="width: 400px;" />
+					<p:message for="name" style="color:red"/>
 
 					<p:outputLabel for="description" value="#{msg['course.description']}" />
-					<p:inputTextarea id="description" value="#{courseController.newDescription}" rows="1" autoResize="false" />
+					<p:inputTextarea id="description" value="#{courseController.newDescription}" autoResize="false" style="width: 400px; height: 200px;"/>
 					<h:outputText />
 
 					<p:outputLabel for="enabled" value="#{msg['course.enabled']}" />
@@ -28,8 +28,8 @@
 			</p:outputPanel>
 
 			<h:panelGrid border="0" columns="3">
-				<p:commandButton value="#{msg['save']}" actionListener="#{courseController.addCourse()}" update="courseListForm newCourseForm dashboardForm" oncomplete="PF('dialogNewCourse').show()" />
-				<p:commandButton value="#{msg['reset']}">
+				<p:commandButton value="#{msg['save']}" actionListener="#{courseController.addCourse()}" update="courseListForm panel" oncomplete="PF('dialogNewCourse').hide()" />
+				<p:commandButton value="#{msg['clear']}">
 					<p:ajax update="panel" resetValues="true"/>
 				</p:commandButton>	
 				<p:commandButton value="#{msg['close']}" onclick="PF('dialogNewCourse').hide()" />

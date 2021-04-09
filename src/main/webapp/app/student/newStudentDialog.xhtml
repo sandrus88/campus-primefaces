@@ -49,8 +49,8 @@
 			</p:outputPanel>
 
 			<h:panelGrid border="0" columns="3">
-				<p:commandButton value="#{msg['save']}" actionListener="#{studentController.addStudent()}" update="studentListForm newStudentForm dashboardForm" oncomplete="PF('dialogNewStudent').show()" />
-				<p:commandButton value="#{msg['reset']}">
+				<p:commandButton value="#{msg['save']}" actionListener="#{studentController.addStudent()}" update="studentListForm panel" oncomplete="PF('dialogNewStudent').hide()" />
+				<p:commandButton value="#{msg['clear']}">
 					<p:ajax update="panel" resetValues="true"/>
 				</p:commandButton>
 				<p:commandButton value="#{msg['close']}" onclick="PF('dialogNewStudent').hide()" />

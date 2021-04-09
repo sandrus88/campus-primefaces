@@ -5,13 +5,11 @@
 	xmlns:p="http://primefaces.org/ui">
 	
 	<h:form id="dashboardForm">
-		<p:dialog widgetVar="dialogDashboard" showEffect="fade" hideEffect="fade" modal="true" width="600" resizable="false" position="center" draggable="false">
-			
-			<f:facet name="header">
-				<h:outputText value="#{msg['dashboard.title']}" />
-			</f:facet>
-			
-			<p:barChart model="#{dashboardController.barModel}" style="width: 100%; height: 500px;"/>
-		</p:dialog>
+		<!-- <p:dialog widgetVar="dialogDashboard" showEffect="fade" hideEffect="fade" modal="true" width="600" resizable="false" position="center" draggable="false"> -->
+		<p:poll interval="60" listener="#{dashboardController.createBarModel()}" update="dashboardForm"/>	
+			<p:panel>
+				<p:barChart model="#{dashboardController.barModel}" style="width: 100%; height: 400px;"/>
+			</p:panel>
+		<!-- </p:dialog> -->
 	</h:form>
 </html>	

@@ -5,65 +5,58 @@
 	xmlns:p="http://primefaces.org/ui">
 	<ui:composition template="/template/pageLayout.xhtml">
 		<ui:define name="content">
-			<h3>
-				<h:outputText value="#{msg['student.home.title']}" />
-			</h3>
 			
-			<h1>
-				<h:outputText value="#{msg['student.search']}" />
-			</h1>
+			<h:form id="searchStudentForm" styleClass="searchForm">
 			
-			<h:form id="searchStudentForm">
-				<h:panelGrid border="0" columns="9" >
+				<h1>
+					<h:outputText value="#{msg['student.search']}" />
+				</h1>
+				
+				<h:panelGrid border="0" columns="6">
 	
 					<p:outputLabel for="name" value="#{msg['student.name']}" />
-					<p:inputText id="name" value="#{studentController.newName}" required="true" maxlength="20"/>
-					<p:message for="name" style="color:red" />
+					<p:inputText id="name" value="#{studentController.searchName}" maxlength="20"/>
 				
 					<p:outputLabel for="email" value="#{msg['student.email']}" />
-					<p:inputText id="email" value="#{studentController.newEmail}" maxlength="20">
+					<p:inputText id="email" value="#{studentController.searchEmail}" maxlength="20">
 						<f:validator validatorId="emailValidator" />
 					</p:inputText>
-					<p:message for="email" style="color:red" />
 				
 					<p:outputLabel for="paymentType" value="#{msg['student.paymentType']}" />
-					<p:selectOneMenu id="paymentType" value="#{studentController.newPaymentType}">
+					<p:selectOneMenu id="paymentType" value="#{studentController.searchPaymentType}">
 						<f:selectItem itemLabel="" />
 						<f:selectItems value="#{studentController.getEnumValues()}" var="payment" itemValue="#{payment}" itemLabel="#{studentController.showPaymentType(payment)}" />
 					</p:selectOneMenu>
-					<h:outputText/>
 
 					<p:outputLabel for="surname" value="#{msg['student.surname']}" />
-					<p:inputText id="surname" value="#{studentController.newSurname}" required="true" maxlength="20"/>
-					<p:message for="surname" style="color:red" />
+					<p:inputText id="surname" value="#{studentController.searchSurname}" maxlength="20"/>
 
 					<p:outputLabel for="jobTitle" value="#{msg['student.jobTitle']}" />
-					<p:inputText id="jobTitle" value="#{studentController.newJobTitle}" maxlength="20"/>
-					<h:outputText/>
+					<p:inputText id="jobTitle" value="#{studentController.searchJobTitle}" maxlength="20"/>
 				
 					<p:outputLabel for="sex" value="#{msg['student.sex']}" />
-					<p:selectOneRadio id="sex" value="#{studentController.newSex}" required="true">
+					<p:selectOneRadio id="sex" value="#{studentController.searchSex}">
 						<f:selectItem itemLabel="M" itemValue="#{msg['student.male']}"/>
 						<f:selectItem itemLabel="F" itemValue="#{msg['student.female']}"/>
 					</p:selectOneRadio>
-					<p:message for="sex" style="color:red" />
 				</h:panelGrid>
 
-				<h:panelGrid border="0" columns="2">
-					<p:commandButton value="#{msg['search']}" action="#{studentController.addStudent()}" ajax="false"/>
-					<p:commandButton value="#{msg['clear']}" action="#{studentController.reset()}" immediate="true" />
+				<h:panelGrid border="0" columns="2" style="margin-left: 680px;">
+					<p:commandButton value="#{msg['search']}" actionListener="#{studentController.searchStudent()}" update="studentListForm"/>
+					<p:commandButton value="#{msg['clear']}" actionListener="#{studentController.cleanSearchForm()}" update="searchStudentForm"/>
 				</h:panelGrid>
 			</h:form>
 			
-			<h1>
-				<h:outputText value="#{msg['student.home.table']}" />
-				<p:commandLink oncomplete="PF('dialogNewStudent').show()" id="linkAddStudent">
-					<i class="fa fa-fw fa-plus" style="font-size: 2rem; margin-right: 30px;"/>
-					<p:tooltip for="linkAddStudent" value="#{msg['add']}" position="bottom"/>
-				</p:commandLink>
-			</h1>
 			<h:form id="studentListForm">
-				<p:dataTable value="#{studentController.studentList}" var="item" border="2" id="studentsTable" styleClass="fixed-size">
+				<h1>
+					<h:outputText value="#{msg['student.home.table']}" />
+					<p:commandLink oncomplete="PF('dialogNewStudent').show()" id="linkAddStudent">
+						<i class="fa fa-fw fa-plus" style="font-size: 2rem"/>
+						<p:tooltip for="linkAddStudent" value="#{msg['add']}" position="bottom"/>
+					</p:commandLink>
+				</h1>
+				
+				<p:dataTable value="#{studentController.searchStudentList}" var="item" border="2" id="studentsTable" styleClass="fixed-size">
 
 					<p:column width="5">
 						<f:facet name="header">
@@ -135,21 +128,17 @@
 						</p:commandLink>
 					</p:column>
 				</p:dataTable>
-			</h:form>
-			
-			<p:dialog widgetVar="dialog" showEffect="fade" hideEffect="fade" modal="true" width="350" resizable="false" header="#{msg['popup.confirm']}" position="center" draggable="false">
-				<h:form>	
+				
+				<p:dialog widgetVar="dialog" showEffect="fade" hideEffect="fade" modal="true" width="350" resizable="false" header="#{msg['popup.confirm']}" position="center" draggable="false">
 					<h:outputText value="#{msg['popup.message.delete']}"/><br/><br/>
 					<p:commandButton value="#{msg['popup.delete.yes']}" actionListener="#{studentController.deleteStudent(studentController.selectedStudent)}" styleClass="ui-confirmdialog-yes" update="studentListForm" oncomplete="PF('dialog').hide()"/>
             		<p:commandButton value="#{msg['popup.delete.no']}" styleClass="ui-confirmdialog-no ui-button-flat" onclick="PF('dialog').hide()"/>
-				</h:form>
-			</p:dialog>
+				</p:dialog>
+			</h:form>
 			
 			<ui:include src="editStudentDialog.xhtml" />
 			<ui:include src="viewStudentDialog.xhtml" />
-			<ui:include src="newStudentDialog.xhtml" />
-
-			
+			<ui:include src="newStudentDialog.xhtml" />	
 		</ui:define>
 	</ui:composition>
 </html>

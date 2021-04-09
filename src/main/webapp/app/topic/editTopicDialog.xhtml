@@ -17,11 +17,11 @@
 				<h:outputText />
 
 				<p:outputLabel for="name" value="#{msg['topic.name']}" />
-				<p:inputText id="name" value="#{topicController.selectedTopic.name}" required="true" maxlength="20"/>
+				<p:inputText id="name" value="#{topicController.selectedTopic.name}" required="true" style="width: 400px;"/>
 				<p:message for="name" style="color:red" />
 
 				<p:outputLabel for="description" value="#{msg['topic.description']}" />
-				<p:inputTextarea id="description" value="#{topicController.selectedTopic.description}" rows="1" autoResize="false" />
+				<p:inputTextarea id="description" value="#{topicController.selectedTopic.description}" autoResize="false" style="width: 400px; height: 200px;"/>
 				<h:outputText />
 			</h:panelGrid>
 

@@ -10,7 +10,9 @@ import javax.faces.bean.SessionScoped;
 
 import org.sg.campus.beans.ApplicationBean;
 import org.sg.campus.domain.Course;
+import org.sg.campus.domain.Student;
 import org.sg.campus.domain.Topic;
+import org.sg.campus.util.SGUtil;
 
 @ManagedBean
 @SessionScoped
@@ -19,14 +21,20 @@ public class TopicController {
 	@ManagedProperty(value = "#{applicationBean}")
 	private ApplicationBean applicationBean;
 	private List<Topic> topicList = new ArrayList<Topic>();
+	private List<Topic> searchTopicList = new ArrayList<Topic>();
 	private Topic selectedTopic;
 
 	private String newName;
 	private String newDescription;
-	
+
+	private String searchName;
+
 	@PostConstruct
 	public void init() {
 		selectedTopic = new Topic();
+		searchTopic();
+		cleanDialogForm();
+		cleanSearchForm();
 	}
 
 	public void addTopic() {
@@ -36,7 +44,30 @@ public class TopicController {
 		topic.setDescription(newDescription);
 		topicList.add(topic);
 		System.out.println("Topic " + topic + " added correctly");
-		cleanForm();
+		cleanDialogForm();
+	}
+
+	public void searchTopic() {
+		if (SGUtil.isEmpty(searchName)) {
+			searchTopicList = topicList;
+			return;
+		}
+		List<Topic> topicListNew = new ArrayList<>();
+		for (Topic topic : topicList) {
+			if (!SGUtil.isEmpty(searchName) && topic.getName().toUpperCase().contains(searchName.toUpperCase())) {
+				topicListNew.add(topic);
+			}
+		}
+		searchTopicList = topicListNew;
+	}
+
+	public void cleanDialogForm() {
+		newName = null;
+		newDescription = null;
+	}
+
+	public void cleanSearchForm() {
+		searchName = null;
 	}
 
 	public void deleteTopic(Topic topic) {
@@ -50,7 +81,7 @@ public class TopicController {
 	}
 
 	public String updateTopic() {
-		cleanForm();
+		cleanDialogForm();
 		System.out.println("Topic " + selectedTopic + " updated correctly");
 		return "/app/topic/homeTopic.xhtml?faces-redirect=true";
 	}
@@ -92,7 +123,7 @@ public class TopicController {
 	public Topic getSelectedTopic() {
 		return selectedTopic;
 	}
-	
+
 	public void setTopicList(List<Topic> topicList) {
 		this.topicList = topicList;
 	}
@@ -100,19 +131,30 @@ public class TopicController {
 	public void setSelectedTopic(Topic selectedTopic) {
 		this.selectedTopic = selectedTopic;
 	}
+	
+	public List<Topic> getSearchTopicList() {
+		return searchTopicList;
+	}
 
-	public void cleanForm() {
-		setNewName(null);
-		setNewDescription(null);
+	public void setSearchTopicList(List<Topic> searchTopicList) {
+		this.searchTopicList = searchTopicList;
+	}
+
+	public String getSearchName() {
+		return searchName;
+	}
+
+	public void setSearchName(String searchName) {
+		this.searchName = searchName;
 	}
 
 	public String reset() {
-		cleanForm();
+		cleanDialogForm();
 		return "/app/topic/homeTopic.xhtml?faces-redirect=true";
 	}
 
 	public String backHome() {
-		cleanForm();
+		cleanDialogForm();
 		return "/index.xhtml?faces-redirect=true";
 	}
 }

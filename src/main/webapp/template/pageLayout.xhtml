@@ -65,12 +65,12 @@
 
                 <div id="footer">
                     <div id="footerDiv" align="center">
-                    	<ui:include src="../dashboard.xhtml" />
+                    	<!-- <ui:include src="../dashboard.xhtml" /> -->
                         <h:outputText value="#{msg['copyright']}"/>
-                        <p:commandLink actionListener="#{dashboardController.createBarModel()}" oncomplete="PF('dialogDashboard').show()" update="dashboardForm" id="linkDash">
+                        <!-- <p:commandLink actionListener="#{dashboardController.createBarModel()}" oncomplete="PF('dialogDashboard').show()" update="dashboardForm" id="linkDash">
                         	<i class="fa fa-fw fa-bar-chart"/>
 							<p:tooltip for="linkDash" value="#{msg['dashboard.bar-chart']}" position="bottom"/>
-						</p:commandLink>	
+						</p:commandLink> -->	
                     </div>
                 </div>
             </div>

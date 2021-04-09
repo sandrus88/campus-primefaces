@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
@@ -22,47 +23,44 @@ import org.primefaces.model.charts.optionconfig.legend.LegendLabel;
 import org.sg.campus.domain.Course;
 import org.sg.campus.domain.Student;
 import org.sg.campus.domain.Topic;
-import org.sg.campus.util.JsfUtil;
+import org.sg.campus.util.JSFUtil;
 
 @ManagedBean
 @SessionScoped
 public class DashboardController {
 
 	private BarChartModel barModel;
-	private StudentController student;
-	private CourseController course;
-	private TopicController topic;
-	private List<Student> allStudentsList;
-	private List<Course> allCoursesList;
-	private List<Topic> allTopicsList;
-	
-	
+
+	private int studentCount;
+	private int courseCount;
+	private int topicCount;
+
 	@PostConstruct
 	public void init() {
 		createBarModel();
-		allStudentsList = new ArrayList<>();
-		allCoursesList = new ArrayList<>();
-		allTopicsList = new ArrayList<>();
+		refreshStudentCount();
+		refreshTopicCount();
+		refreshCourseCount();
 	}
 
 	public void createBarModel() {
 		Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
 		ResourceBundle bundle = ResourceBundle.getBundle("messages.messages", locale);
-		String message;
-		getStudentList();
-		getCourseList();
-		getTopicList();
+		refreshStudentCount();
+		refreshTopicCount();
+		refreshCourseCount();
+
 		barModel = new BarChartModel();
 		ChartData data = new ChartData();
-		message = bundle.getString("dashboard.title");
+		String message = bundle.getString("dashboard.title");
 
 		BarChartDataSet barDataSet = new BarChartDataSet();
 		barDataSet.setLabel(message);
 
 		List<Number> values = new ArrayList<>();
-		values.add(allStudentsList.size());
-		values.add(allCoursesList.size());
-		values.add(allTopicsList.size());
+		values.add(studentCount);
+		values.add(courseCount);
+		values.add(topicCount);
 		barDataSet.setData(values);
 
 		List<String> bgColor = new ArrayList<>();
@@ -122,33 +120,21 @@ public class DashboardController {
 		this.barModel = barModel;
 	}
 
-	public List<Student> getStudentList() {
-		student = JsfUtil.findBean("studentController");
-		allStudentsList = student.getStudentList();
-		return allStudentsList;
+	public void refreshStudentCount() {
+		StudentController student = JSFUtil.findBean("studentController");
+		List<Student> allStudentsList = student.getStudentList();
+		studentCount = allStudentsList.size();
 	}
 
-	public void setStudentList(List<Student> studentList) {
-		this.allStudentsList = studentList;
+	private void refreshTopicCount() {
+		TopicController topicController = JSFUtil.findBean("topicController");
+		List<Topic> allTopicsList = topicController.getTopicList();
+		topicCount = allTopicsList.size();
 	}
 
-	public List<Course> getCourseList() {
-		course = JsfUtil.findBean("courseController");
-		allCoursesList = course.getCourseList();
-		return allCoursesList;
-	}
-
-	public void setCourseList(List<Course> courseList) {
-		this.allCoursesList = courseList;
-	}
-
-	public List<Topic> getTopicList() {
-		topic = JsfUtil.findBean("topicController");
-		allTopicsList = topic.getTopicList();
-		return allTopicsList;
-	}
-
-	public void setTopicList(List<Topic> topicList) {
-		this.allTopicsList = topicList;
+	private void refreshCourseCount() {
+		CourseController courseController = JSFUtil.findBean("courseController");
+		List<Course> allCoursesList = courseController.getCourseList();
+		courseCount = allCoursesList.size();
 	}
 }

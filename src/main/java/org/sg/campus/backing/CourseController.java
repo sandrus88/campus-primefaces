@@ -12,7 +12,8 @@ import org.sg.campus.beans.ApplicationBean;
 import org.sg.campus.domain.Course;
 import org.sg.campus.domain.Student;
 import org.sg.campus.domain.Topic;
-import org.sg.campus.util.JsfUtil;
+import org.sg.campus.util.JSFUtil;
+import org.sg.campus.util.SGUtil;
 
 @ManagedBean
 @SessionScoped
@@ -22,17 +23,62 @@ public class CourseController {
 	private ApplicationBean applicationBean;
 	private TopicController topicController;
 	private List<Course> courseList = new ArrayList<Course>();
+	private List<Course> searchCourseList = new ArrayList<Course>();
 	private Course selectedCourse;
 
 	private List<Topic> allTopics = new ArrayList<Topic>();
 
 	private String newName;
 	private String newDescription;
-	private boolean newEnabled;
+	private Boolean newEnabled;
+	
+	private String searchName;
+	private Boolean searchEnabled;
 	
 	@PostConstruct
 	public void init() {
 		selectedCourse = new Course();
+		searchCourse();
+		cleanDialogForm();
+		cleanSearchForm();
+	}
+	
+	public void addCourse() {
+		Course course = new Course();
+		course.setId(applicationBean.getNextInt());
+		course.setName(newName);
+		course.setDescription(newDescription);
+		course.setEnabled(newEnabled);
+		courseList.add(course);
+		System.out.println("Course " + course + " added correctly");
+		cleanDialogForm();
+	}
+	
+	public void searchCourse() {
+		if (SGUtil.isEmpty(searchName) && searchEnabled == null) {
+			searchCourseList = courseList;
+			return;
+		}
+		List<Course> courseListNew = new ArrayList<>();
+		for (Course course : courseList) {
+			if (!SGUtil.isEmpty(searchName) && course.getName().toUpperCase().contains(searchName.toUpperCase())) {
+				courseListNew.add(course);
+			} else if (searchEnabled != null && course.getEnabled() == searchEnabled) {
+				courseListNew.add(course);
+			}
+		}
+		searchCourseList = courseListNew;
+	}
+	
+	public void cleanDialogForm() {
+		newName = null;
+		newDescription = null;
+		newEnabled = null;
+	}
+	
+	public void cleanSearchForm() {
+		searchName = null;
+		searchEnabled = null;
 	}
 
 	public void updateCourseTopics(Course course) {
@@ -73,17 +119,6 @@ public class CourseController {
 		}
 	}
 
-	public void addCourse() {
-		Course course = new Course();
-		course.setId(applicationBean.getNextInt());
-		course.setName(newName);
-		course.setDescription(newDescription);
-		course.setEnabled(newEnabled);
-		courseList.add(course);
-		System.out.println("Course " + course + " added correctly");
-		cleanForm();
-	}
-
 	public void deleteCourse(Course course) {
 		courseList.remove(course);
 		System.out.println("Course " + course + " deleted correctly");
@@ -95,7 +130,7 @@ public class CourseController {
 	}
 
 	public String updateCourse() {
-		cleanForm();
+		cleanDialogForm();
 		System.out.println("Course " + selectedCourse + " updated correctly");
 		return "/app/course/homeCourse.xhtml?faces-redirect=true";
 	}
@@ -122,11 +157,11 @@ public class CourseController {
 		this.newDescription = newDescription;
 	}
 
-	public boolean isNewEnabled() {
+	public Boolean isNewEnabled() {
 		return newEnabled;
 	}
 
-	public void setNewEnabled(boolean newEnabled) {
+	public void setNewEnabled(Boolean newEnabled) {
 		this.newEnabled = newEnabled;
 	}
 
@@ -166,25 +201,47 @@ public class CourseController {
 		this.allTopics = allTopics;
 	}
 
+	public List<Course> getSearchCourseList() {
+		return searchCourseList;
+	}
+
+	public void setSearchCourseList(List<Course> searchCourseList) {
+		this.searchCourseList = searchCourseList;
+	}
+
+	public String getSearchName() {
+		return searchName;
+	}
+
+	public void setSearchName(String searchName) {
+		this.searchName = searchName;
+	}
+
+	public Boolean getSearchEnabled() {
+		return searchEnabled;
+	}
+
+	public void setSearchEnabled(Boolean searchEnabled) {
+		this.searchEnabled = searchEnabled;
+	}
+
+	public Boolean getNewEnabled() {
+		return newEnabled;
+	}
+
 	public List<Topic> getAllTopics() {
-		topicController = JsfUtil.findBean("topicController");
+		topicController = JSFUtil.findBean("topicController");
 		allTopics = topicController.getTopicList();
 		return allTopics;
 	}
 
-	public void cleanForm() {
-		setNewName(null);
-		setNewDescription(null);
-		setNewEnabled(false);
-	}
-
 	public String reset() {
-		cleanForm();
+		cleanDialogForm();
 		return "/app/course/homeCourse.xhtml?faces-redirect=true";
 	}
 
 	public String backHome() {
-		cleanForm();
+		cleanDialogForm();
 		return "/index.xhtml?faces-redirect=true";
 	}
 }

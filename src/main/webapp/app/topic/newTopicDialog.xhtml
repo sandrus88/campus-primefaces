@@ -14,18 +14,18 @@
 			<p:outputPanel id="panel">
 				<h:panelGrid border="0" columns="3">
 					<p:outputLabel for="name" value="#{msg['topic.name']}" />
-					<p:inputText id="name" value="#{topicController.newName}" required="true" maxlength="20" />
+					<p:inputText id="name" value="#{topicController.newName}" required="true" style="width: 400px;" />
 					<p:message for="name" style="color:red" />
 
 					<p:outputLabel for="description" value="#{msg['topic.description']}" />
-					<p:inputTextarea id="description" value="#{topicController.newDescription}" rows="1" autoResize="false" />
+					<p:inputTextarea id="description" value="#{topicController.newDescription}" autoResize="false" style="width: 400px; height: 200px;"/>
 					<h:outputText />
 				</h:panelGrid>
 			</p:outputPanel>
 
 			<h:panelGrid border="0" columns="3">
-				<p:commandButton value="#{msg['save']}" actionListener="#{topicController.addTopic()}" update="topicsListForm newTopicForm dashboardForm" oncomplete="PF('dialogNewTopic').show()" />
-				<p:commandButton value="#{msg['reset']}">
+				<p:commandButton value="#{msg['save']}" actionListener="#{topicController.addTopic()}" update="topicsListForm panel" oncomplete="PF('dialogNewTopic').hide()" />
+				<p:commandButton value="#{msg['clear']}">
 					<p:ajax update="panel" resetValues="true"/>
 				</p:commandButton>
 				<p:commandButton value="#{msg['close']}" onclick="PF('dialogNewTopic').hide()" />
